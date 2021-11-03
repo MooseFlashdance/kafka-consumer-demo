@@ -17,6 +17,7 @@ import reactor.core.Disposable;
 import reactor.kafka.receiver.ReceiverOptions;
 import reactor.kafka.receiver.ReceiverRecord;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +33,7 @@ public abstract class BaseConsumer {
 
   private static final String BOOTSTRAP_SERVERS = "localhost:29092";
 
-  public void Initialize(String failureTopic, String consumer) {
+  public void Initialize(String topic, String failureTopic, String consumer) {
 
     prmRecoverer =
         new PrmRecoverer(
@@ -51,6 +52,11 @@ public abstract class BaseConsumer {
     props.put(ConsumerConfig.REQUEST_TIMEOUT_MS_CONFIG, 30000);
 
     receiverOptions = ReceiverOptions.create(props);
+
+    receiverOptions
+        .subscription(Collections.singleton(topic))
+        .addAssignListener(partitions -> LOGGER.debug("onPartitionsAssigned {}", partitions))
+        .addRevokeListener(partitions -> LOGGER.debug("onPartitionsRevoked {}", partitions));
   }
 
   private KafkaOperations<String, Object> getEventKafkaTemplate() {
