@@ -36,7 +36,9 @@ public class KafkaConsumerDemoApplication implements CommandLineRunner {
     Disposable disposable1 = demoRetryConsumer.consume();
 
     latch.await(300, TimeUnit.SECONDS);
+
     disposable.dispose();
+    disposable1.dispose();
 
     LOGGER.info("Complete");
   }

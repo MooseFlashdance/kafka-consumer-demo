@@ -22,8 +22,7 @@ import java.util.Map;
 
 public abstract class BaseConsumer {
 
-  @Autowired
-  DemoService demoService;
+  @Autowired DemoService demoService;
 
   private static final Logger LOGGER = LoggerFactory.getLogger(BaseConsumer.class);
 
