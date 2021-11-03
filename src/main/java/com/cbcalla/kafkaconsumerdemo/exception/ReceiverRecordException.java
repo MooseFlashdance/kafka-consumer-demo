@@ -1,4 +1,4 @@
-package com.cbcalla.kafkaconsumerdemo;
+package com.cbcalla.kafkaconsumerdemo.exception;
 
 import reactor.kafka.receiver.ReceiverRecord;
 
@@ -7,7 +7,7 @@ public class ReceiverRecordException extends RuntimeException {
 
     private final ReceiverRecord record;
 
-    ReceiverRecordException(ReceiverRecord record, Throwable t) {
+    public ReceiverRecordException(ReceiverRecord record, Throwable t) {
         super(t);
         this.record = record;
     }
